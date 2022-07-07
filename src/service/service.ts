@@ -9,34 +9,16 @@ export class HTTP extends RESTDataSource {
     request.headers.set("Authorization", `Bearer ${this.context.token}`)
   }
 
-  selectOnes() {
-    return this.get("/").then((res) =>
-      res.items.map((item: any) => ({
-        ...item,
-      }))
-    );
-  }
+  selectOnes = () => this.get("/").then((res) => res.items.map((item: any) => ({ ...item, })));
 
-  selectOne(id: string) {
-    return this.get(`/${id}`);
-  }
+  selectOne = (id: string) => this.get(`/${id}`);
 
-  selectOnesByIds(items: Array<string>) {
-    return Promise.all(items.map((id: string) => this.selectOne(id))
-    )
-  }
-  
-  async createPostMethod(parent: any, args: any) {
-    return await this.post("/", { ...args.input })
-  }
+  selectOnesByIds = (items: Array<string>) => Promise.all(items.map((id: string) => this.selectOne(id)))
 
-  async upPutMethod(parent: any, args: any) {
-    return await this.put(`/${args.id}`, { ...args.input })
-  }
+  createPostMethod = async (parent: any, args: any) => await this.post("/", { ...args.input })
 
-  async deleteMethod(parent: any, args: any) {
-    return await this.delete(`/${args.id}`)
-  }
+  upPutMethod = async (parent: any, args: any) => await this.put(`/${args.id}`, { ...args.input })
 
+  deleteMethod = async (parent: any, args: any) => await this.delete(`/${args.id}`)
 
 }
